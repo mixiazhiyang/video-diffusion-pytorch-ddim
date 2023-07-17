@@ -81,7 +81,14 @@ loss = diffusion(videos, cond = text)
 loss.backward()
 # after a lot of training
 
-sampled_videos = diffusion.sample(cond = text)
+diffusion_ddim = GaussianDiffusion(
+    model,
+    image_size = 32,
+    num_frames = 5,
+    timesteps = 50,   # number of steps
+    loss_type = 'l1'    # L1 or L2
+)
+sampled_videos = diffusion_ddim.sample(cond = text)
 sampled_videos.shape # (2, 3, 5, 32, 32)
 ```
 
